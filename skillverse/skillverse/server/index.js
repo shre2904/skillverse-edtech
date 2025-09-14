@@ -40,7 +40,7 @@ app.use((err, req, res) => {
 
 // ✅ 404 handler – Express 5–compatible
 app.use((req, res) => {
-  res.status(404).json({ message: 'Route not found' });
+  res.status(404).json({ message: 'Route not found ! check again' });
 });
 
 const PORT = process.env.PORT || 5000;
