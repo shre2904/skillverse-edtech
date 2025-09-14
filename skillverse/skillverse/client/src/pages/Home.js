@@ -83,12 +83,12 @@ const Home = () => {
                 <span className="bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
                   EdTech platform
                 </span>
-              </h1>
+            </h1>
               
               <p className="text-xl text-secondary-300 mb-8 leading-relaxed">
-                Master new skills with our advanced EdTech platform featuring AR/VR content,
-                interactive courses, and personalized learning experiences.
-              </p>
+              Master new skills with our advanced EdTech platform featuring AR/VR content, 
+              interactive courses, and personalized learning experiences.
+            </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Button 
@@ -211,13 +211,13 @@ const Home = () => {
                 <CardContent className="p-8">
                   <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <feature.icon className="h-8 w-8 text-white" />
-                  </div>
+                </div>
                   <h3 className="text-xl font-semibold text-foreground mb-4">
-                    {feature.title}
-                  </h3>
+                  {feature.title}
+                </h3>
                   <p className="text-secondary-300">
-                    {feature.description}
-                  </p>
+                  {feature.description}
+                </p>
                 </CardContent>
               </Card>
             ))}
@@ -266,8 +266,8 @@ const Home = () => {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm text-primary-400 font-medium">
-                        {course.category}
-                      </span>
+                          {course.category}
+                        </span>
                       <div className="flex items-center">
                         <StarIcon className="h-4 w-4 text-accent-500 fill-current" />
                         <span className="text-sm text-secondary-300 ml-1">
@@ -276,31 +276,31 @@ const Home = () => {
                       </div>
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary-400 transition-colors">
-                      {course.title}
-                    </h3>
+                        {course.title}
+                      </h3>
                     <p className="text-secondary-300 text-sm mb-4 line-clamp-2">
-                      {course.description}
-                    </p>
+                        {course.description}
+                      </p>
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center text-sm text-secondary-400">
                         <ClockIcon className="h-4 w-4 mr-1" />
                         <span>{course.duration} weeks</span>
-                      </div>
+                        </div>
                       <div className="flex items-center text-sm text-secondary-400">
                         <UserGroupIcon className="h-4 w-4 mr-1" />
                         <span>{course.enrollmentCount} students</span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         <span className="text-2xl font-bold text-foreground">
                           ₹{course.price?.toLocaleString() || '0'}
-                        </span>
-                        {course.originalPrice && course.originalPrice > course.price && (
+                          </span>
+                          {course.originalPrice && course.originalPrice > course.price && (
                           <span className="text-lg text-secondary-400 line-through ml-2">
                             ₹{course.originalPrice?.toLocaleString()}
-                          </span>
-                        )}
+                            </span>
+                          )}
                       </div>
                     </div>
                     <Button 
@@ -322,9 +322,9 @@ const Home = () => {
               to="/courses"
               className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
-              View All Courses
+                View All Courses
               <ArrowRightIcon className="h-5 w-5 ml-2" />
-            </Button>
+              </Button>
           </div>
         </div>
       </section>
@@ -351,13 +351,13 @@ const Home = () => {
                 <Card className="text-center p-8 hover:shadow-lg transition-all duration-300 transform hover:scale-105 bg-secondary-800 border-secondary-600 group-hover:border-primary-500/50">
                   <div className={`w-16 h-16 ${category.color} rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform`}>
                     <AcademicCapIcon className="h-8 w-8 text-white" />
-                  </div>
+                </div>
                   <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary-400 transition-colors">
-                    {category.name}
-                  </h3>
+                  {category.name}
+                </h3>
                   <p className="text-secondary-400 text-sm">
-                    {category.count}
-                  </p>
+                  {category.count}
+                </p>
                 </Card>
               </Link>
             ))}
@@ -380,16 +380,16 @@ const Home = () => {
               to="/register"
               className="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
-              Get Started Free
-            </Button>
+                Get Started Free
+              </Button>
             <Button 
               as={Link} 
               to="/courses"
               variant="outline"
               className="border-white text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
             >
-              Browse Courses
-            </Button>
+                Browse Courses
+              </Button>
           </div>
         </div>
       </section>

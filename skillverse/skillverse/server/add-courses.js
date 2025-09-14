@@ -5,6 +5,61 @@ require('dotenv').config();
 const Course = require('./models/Course');
 const User = require('./models/User');
 
+// Update razorpayService.js to handle missing keys gracefully
+const Razorpay = require('razorpay');
+const crypto = require('crypto');
+
+class RazorpayService {
+  constructor() {
+    // Check if Razorpay keys are available
+    if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
+      this.instance = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET,
+      });
+      this.isConfigured = true;
+    } else {
+      console.log('⚠️  Razorpay keys not configured. Payment features will be disabled.');
+      this.isConfigured = false;
+    }
+  }
+
+  // Create order
+  async createOrder(amount, currency = 'INR', receipt, notes = {}) {
+    if (!this.isConfigured) {
+      return {
+        success: false,
+        message: 'Razorpay not configured. Please add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to .env file'
+      };
+    }
+
+    try {
+      const options = {
+        amount: amount * 100, // Razorpay expects amount in paise
+        currency,
+        receipt,
+        notes
+      };
+
+      const order = await this.instance.orders.create(options);
+      return {
+        success: true,
+        order,
+        message: 'Order created successfully'
+      };
+    } catch (error) {
+      console.error('Razorpay order creation error:', error);
+      return {
+        success: false,
+        message: 'Failed to create order',
+        error: error.message
+      };
+    }
+  }
+
+  // ... rest of the methods with similar checks
+}
+
 // Function to create instructor users first
 async function createInstructors() {
   const instructors = [
@@ -169,8 +224,7 @@ async function getCoursesData(instructors) {
 async function addCourses() {
   try {
     // Connect to database
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/skillverse';
-    await mongoose.connect(mongoURI);
+    const mongoURI = process.env.MONGODB_URL || 'mongodb://localhost:27017/skillverse';    await mongoose.connect(mongoURI);
     console.log('✅ Connected to database');
 
     // Create instructors first
