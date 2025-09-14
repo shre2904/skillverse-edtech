@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/circuit-module/static/css/main.e29020fb.css",
+    "main.js": "/circuit-module/static/js/main.9f6e96bb.js",
+    "index.html": "/circuit-module/index.html",
+    "main.e29020fb.css.map": "/circuit-module/static/css/main.e29020fb.css.map",
+    "main.9f6e96bb.js.map": "/circuit-module/static/js/main.9f6e96bb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e29020fb.css",
+    "static/js/main.9f6e96bb.js"
+  ]
+}

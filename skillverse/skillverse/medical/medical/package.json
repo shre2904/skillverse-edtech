@@ -1,0 +1,45 @@
+{
+  "name": "vr-lungs-anatomy",
+  "version": "1.0.0",
+  "description": "VR Lungs Anatomy Learning Module",
+  "homepage": "/medical-module",
+  "private": true,
+  "dependencies": {
+    "@react-three/drei": "^9.88.13",
+    "@react-three/fiber": "^8.15.12",
+    "@react-three/xr": "^4.0.0",
+    "aframe": "^1.4.0",
+    "aframe-react": "^4.4.0",
+    "framer-motion": "^10.16.16",
+    "lucide-react": "^0.294.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "styled-components": "^6.1.1",
+    "three": "^0.160.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
