@@ -2,7 +2,7 @@
   "name": "skillverse-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://skillverse-frontend.onrender.com",
+  "homepage": "https://skillverse-edtech.onrender.com",
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "@testing-library/jest-dom": "^5.16.4",
