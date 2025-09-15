@@ -39,27 +39,27 @@ api.interceptors.response.use(
 // Auth API
 export const authAPI = {
   login: async (data) => {
-    const response = await api.post('/auth/login', data);
+    const response = await api.post('/api/auth/login', data);
     return response.data;
   },
 
   register: async (data) => {
-    const response = await api.post('/auth/register', data);
+    const response = await api.post('/api/auth/register', data);
     return response.data;
   },
 
   getProfile: async () => {
-    const response = await api.get('/auth/me');
+    const response = await api.get('/api/auth/me');
     return response.data;
   },
 
   updateProfile: async (data) => {
-    const response = await api.put('/auth/profile', data);
+    const response = await api.put('/api/auth/profile', data);
     return response.data;
   },
 
   updatePassword: async (data) => {
-    const response = await api.put('/auth/password', data);
+    const response = await api.put('/api/auth/password', data);
     return response.data;
   },
 
@@ -67,7 +67,7 @@ export const authAPI = {
     const formData = new FormData();
     formData.append('avatar', file);
     
-    const response = await api.post('/auth/upload-avatar', formData, {
+    const response = await api.post('/api/auth/upload-avatar', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -76,7 +76,7 @@ export const authAPI = {
   },
 
   removeAvatar: async () => {
-    const response = await api.delete('/auth/avatar');
+    const response = await api.delete('/api/auth/avatar');
     return response.data;
   },
 };
@@ -91,37 +91,37 @@ export const coursesAPI = {
       }
     });
     
-    const response = await api.get(`/courses?${params.toString()}`);
+    const response = await api.get(`/api/courses?${params.toString()}`);
     return response.data;
   },
 
   getFeaturedCourses: async () => {
-    const response = await api.get('/courses/featured');
+    const response = await api.get('/api/courses/featured');
     return response.data;
   },
 
   getCourseCategories: async () => {
-    const response = await api.get('/courses/categories');
+    const response = await api.get('/api/courses/categories');
     return response.data;
   },
 
   getCourseById: async (id) => {
-    const response = await api.get(`/courses/${id}`);
+    const response = await api.get(`/api/courses/${id}`);
     return response.data;
   },
 
   createCourse: async (data) => {
-    const response = await api.post('/courses', data);
+    const response = await api.post('/api/courses', data);
     return response.data;
   },
 
   updateCourse: async (id, data) => {
-    const response = await api.put(`/courses/${id}`, data);
+    const response = await api.put(`/api/courses/${id}`, data);
     return response.data;
   },
 
   addReview: async (courseId, rating, comment) => {
-    const response = await api.post(`/courses/${courseId}/reviews`, { rating, comment });
+    const response = await api.post(`/api/courses/${courseId}/reviews`, { rating, comment });
     return response.data;
   },
 };
@@ -129,22 +129,22 @@ export const coursesAPI = {
 // Payments API
 export const paymentsAPI = {
   createOrder: async (courseId) => {
-    const response = await api.post('/payments/create-order', { courseId });
+    const response = await api.post('/api/payments/create-order', { courseId });
     return response.data;
   },
 
   verifyPayment: async (orderId, paymentId, signature) => {
-    const response = await api.post('/payments/verify-payment', { orderId, paymentId, signature });
+    const response = await api.post('/api/payments/verify-payment', { orderId, paymentId, signature });
     return response.data;
   },
 
   getPaymentHistory: async () => {
-    const response = await api.get('/payments/history');
+    const response = await api.get('/api/payments/history');
     return response.data;
   },
 
   createRefund: async (paymentId, amount, reason) => {
-    const response = await api.post('/payments/refund', { paymentId, amount, reason });
+    const response = await api.post('/api/payments/refund', { paymentId, amount, reason });
     return response.data;
   },
 };
@@ -152,17 +152,17 @@ export const paymentsAPI = {
 // User API
 export const userAPI = {
   getEnrolledCourses: async () => {
-    const response = await api.get('/users/enrolled-courses');
+    const response = await api.get('/api/users/enrolled-courses');
     return response.data;
   },
 
   updateCourseProgress: async (courseId, progress, completedLessonId) => {
-    const response = await api.put(`/users/enrolled-courses/${courseId}/progress`, { progress, completedLessonId });
+    const response = await api.put(`/api/users/enrolled-courses/${courseId}/progress`, { progress, completedLessonId });
     return response.data;
   },
 
   getAnalytics: async () => {
-    const response = await api.get('/users/analytics');
+    const response = await api.get('/api/users/analytics');
     return response.data;
   },
 };
@@ -170,27 +170,27 @@ export const userAPI = {
 // Chatbot API
 export const chatbotAPI = {
   sendMessage: async (data) => {
-    const response = await api.post('/chatbot/message', data);
+    const response = await api.post('/api/chatbot/message', data);
     return response.data;
   },
 
   createSession: async () => {
-    const response = await api.post('/chatbot/session');
+    const response = await api.post('/api/chatbot/session');
     return response.data;
   },
 
   getSession: async (sessionId) => {
-    const response = await api.get(`/chatbot/session/${sessionId}`);
+    const response = await api.get(`/api/chatbot/session/${sessionId}`);
     return response.data;
   },
 
   endSession: async (sessionId) => {
-    const response = await api.delete(`/chatbot/session/${sessionId}`);
+    const response = await api.delete(`/api/chatbot/session/${sessionId}`);
     return response.data;
   },
 
   getQuickReplies: async () => {
-    const response = await api.get('/chatbot/quick-replies');
+    const response = await api.get('/api/chatbot/quick-replies');
     return response.data;
   },
 };
