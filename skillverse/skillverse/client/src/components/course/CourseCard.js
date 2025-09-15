@@ -27,11 +27,14 @@ const CourseCard = ({
 
   return (
     <Card className="group hover:shadow-lg transition-shadow duration-300">
-      <div className="relative">
+      <div className="relative overflow-hidden">
         <img
           src={course.thumbnail}
           alt={course.title}
-          className="w-full h-48 object-cover rounded-t-lg"
+          className="w-full h-48 object-cover rounded-t-lg group-hover:scale-105 transition-transform duration-300"
+          onError={(e) => {
+            e.target.src = '/course-placeholder.jpg';
+          }}
         />
         {course.isFeatured && (
           <div className="absolute top-2 left-2 bg-yellow-500 text-white px-2 py-1 rounded text-xs font-semibold">
@@ -99,11 +102,11 @@ const CourseCard = ({
         <div className="w-full space-y-2">
           <div className="flex items-center space-x-2 text-sm text-gray-600">
             <img
-              src={course.instructor.avatar || '/default-avatar.png'}
-              alt={course.instructor.name}
+              src={course.instructor?.avatar || '/default-avatar.png'}
+              alt={course.instructor?.name || 'Instructor'}
               className="h-6 w-6 rounded-full"
             />
-            <span>By {course.instructor.name}</span>
+            <span>By {course.instructor?.name || 'Expert Instructor'}</span>
           </div>
 
           {showEnrollButton && (
