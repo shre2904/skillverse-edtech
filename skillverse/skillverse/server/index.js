@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 // Import the Course model
@@ -12,6 +13,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URL)
@@ -422,6 +426,11 @@ app.use((req, res) => {
     success: false,
     message: 'Route not found'
   });
+});
+
+// Catch all handler: send back React's index.html file for any non-API routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
