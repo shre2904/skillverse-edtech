@@ -30,7 +30,8 @@ const LearningModulePage = () => {
     }
   );
 
-  const course = courseData?.course;
+  // Fix: Change from courseData?.course to courseData?.data
+  const course = courseData?.data;
 
   useEffect(() => {
     if (course) {
