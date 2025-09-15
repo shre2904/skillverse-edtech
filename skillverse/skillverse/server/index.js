@@ -17,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files from the React app build directory
 app.use(express.static(path.join(__dirname, '../client/build')));
 
+// Serve course images specifically
+app.use('/images/courses', express.static(path.join(__dirname, '../client/public/images/courses')));
+
 // Database connection
 mongoose.connect(process.env.MONGODB_URL)
   .then(() => console.log('✅ Database connected successfully'))
@@ -35,16 +38,21 @@ const updateCourseImages = async () => {
   try {
     console.log('🔄 Updating course images...');
     
+    // Get the base URL for images
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://skillverse-backend-8j15.onrender.com' 
+      : 'http://localhost:5000';
+    
     // Update Circuit Module course
     await Course.updateOne(
       { title: "Interactive Circuit Learning with VR/AR" },
-      { $set: { thumbnail: "/images/courses/circuit img.jpg" } }
+      { $set: { thumbnail: `${baseUrl}/images/courses/circuit img.jpg` } }
     );
     
     // Update Medical Module course
     await Course.updateOne(
       { title: "VR Lungs Anatomy Learning Module" },
-      { $set: { thumbnail: "/images/courses/lungs-illustration.jpg" } }
+      { $set: { thumbnail: `${baseUrl}/images/courses/lungs-illustration.jpg` } }
     );
     
     console.log('✅ Course images updated successfully');
@@ -67,6 +75,11 @@ const seedCourses = async () => {
 
     console.log(' Seeding database with courses...');
 
+    // Get the base URL for images
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://skillverse-backend-8j15.onrender.com' 
+      : 'http://localhost:5000';
+
     const coursesToSeed = [
       {
         title: "Interactive Circuit Learning with VR/AR",
@@ -79,7 +92,7 @@ const seedCourses = async () => {
         category: "Engineering",
         rating: { average: 4.9, count: 1250 },
         enrollmentCount: 1250,
-        thumbnail: "/images/courses/circuit img.jpg",
+        thumbnail: `${baseUrl}/images/courses/circuit img.jpg`,
         isPublished: true,
         isFeatured: true,
         instructor: new mongoose.Types.ObjectId(),
@@ -164,7 +177,7 @@ const seedCourses = async () => {
         category: "Anatomy",
         rating: { average: 4.8, count: 890 },
         enrollmentCount: 890,
-        thumbnail: "/images/courses/lungs-illustration.jpg",
+        thumbnail: `${baseUrl}/images/courses/lungs-illustration.jpg`,
         isPublished: true,
         isFeatured: true,
         instructor: new mongoose.Types.ObjectId(),
