@@ -7,8 +7,8 @@ const MedicalModule = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Redirect to the built Medical module
-    window.location.href = '/medical-module/index.html';
+    // Redirect to the running Medical VR module
+    window.location.href = 'http://localhost:3001';
   }, []);
 
   return (
@@ -16,6 +16,17 @@ const MedicalModule = () => {
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-2 border-primary-500 border-t-transparent mx-auto mb-4"></div>
         <p className="text-secondary-300 mb-4">Loading Medical VR Module...</p>
+        <p className="text-sm text-secondary-400 mb-4">
+          If the module doesn't load automatically, 
+          <a 
+            href="http://localhost:3001" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary-500 hover:text-primary-400 ml-1 underline"
+          >
+            click here to open it manually
+          </a>
+        </p>
         <Button
           onClick={() => navigate(-1)}
           variant="outline"

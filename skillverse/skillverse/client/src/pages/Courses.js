@@ -63,10 +63,11 @@ const Courses = () => {
 
   const categories = [
     'All',
+    'Engineering',
+    'Anatomy',
     'Programming',
     'Design',
     'Business',
-    'Engineering',
     'Science',
     'Arts',
     'Mathematics',
@@ -82,6 +83,10 @@ const Courses = () => {
     { value: 'rating', label: 'Highest Rated' },
     { value: 'enrollment', label: 'Most Popular' },
   ];
+
+  // Get courses from the correct data structure
+  const courses = coursesData?.data || [];
+  const totalCourses = coursesData?.pagination?.total || courses.length;
 
   if (error) {
     return (
@@ -218,7 +223,7 @@ const Courses = () => {
                 {/* Results Header */}
                 <div className="flex justify-between items-center mb-6">
                   <p className="text-secondary-300">
-                    {coursesData?.total || 0} courses found
+                    {totalCourses} courses found
                   </p>
                   <div className="flex items-center space-x-2">
                     <FunnelIcon className="h-5 w-5 text-secondary-400" />
@@ -228,7 +233,7 @@ const Courses = () => {
 
                 {/* Courses Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {coursesData?.courses?.map((course) => (
+                  {courses.map((course) => (
                     <Card key={course._id} className="group hover:shadow-lg transition-shadow">
                       <div className="aspect-w-16 aspect-h-9 bg-secondary-800 rounded-t-lg overflow-hidden">
                         <img
@@ -236,6 +241,11 @@ const Courses = () => {
                           alt={course.title}
                           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
+                        {course.isFeatured && (
+                          <div className="absolute top-2 left-2 bg-accent-500 text-gray-900 px-2 py-1 rounded text-xs font-semibold">
+                            Featured
+                          </div>
+                        )}
                       </div>
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between mb-2">
@@ -261,17 +271,17 @@ const Courses = () => {
                         <div className="flex items-center justify-between text-sm text-secondary-400 mb-4">
                           <div className="flex items-center">
                             <ClockIcon className="h-4 w-4 mr-1" />
-                            {course.duration || '2h 30m'}
+                            {course.duration ? `${Math.floor(course.duration / 60)}h ${course.duration % 60}m` : '2h 30m'}
                           </div>
                           <div className="flex items-center">
                             <UserGroupIcon className="h-4 w-4 mr-1" />
-                            {course.enrollmentCount || 0} students
+                            {course.studentsCount || course.enrollmentCount || 0} students
                           </div>
                         </div>
                         
                         <div className="flex items-center justify-between">
                           <div className="text-lg font-bold text-foreground">
-                            {course.price === 0 ? 'Free' : `₹${course.price}`}
+                            {course.price === 0 ? 'Free' : `₹${course.price?.toLocaleString()}`}
                           </div>
                           <Link to={`/courses/${course._id}`}>
                             <Button size="sm" className="bg-accent-500 text-gray-900 hover:bg-accent-600">
@@ -284,8 +294,30 @@ const Courses = () => {
                   ))}
                 </div>
 
+                {/* Show message if no courses */}
+                {courses.length === 0 && !isLoading && (
+                  <div className="text-center py-12">
+                    <h3 className="text-xl font-semibold text-foreground mb-2">No courses found</h3>
+                    <p className="text-secondary-300 mb-4">Try adjusting your filters or search terms.</p>
+                    <Button
+                      onClick={() => {
+                        setFilters({
+                          search: '',
+                          category: '',
+                          level: '',
+                          sort: '',
+                          page: 1,
+                        });
+                        setSearchParams({});
+                      }}
+                    >
+                      Clear Filters
+                    </Button>
+                  </div>
+                )}
+
                 {/* Pagination */}
-                {coursesData?.totalPages > 1 && (
+                {coursesData?.pagination?.totalPages > 1 && (
                   <div className="flex justify-center mt-8">
                     <div className="flex space-x-2">
                       <Button
@@ -297,7 +329,7 @@ const Courses = () => {
                         Previous
                       </Button>
                       
-                      {Array.from({ length: coursesData.totalPages }, (_, i) => i + 1).map((page) => (
+                      {Array.from({ length: coursesData.pagination.totalPages }, (_, i) => i + 1).map((page) => (
                         <Button
                           key={page}
                           variant={page === filters.page ? "default" : "outline"}
@@ -315,7 +347,7 @@ const Courses = () => {
                       <Button
                         variant="outline"
                         onClick={() => handlePageChange(filters.page + 1)}
-                        disabled={filters.page === coursesData.totalPages}
+                        disabled={filters.page === coursesData.pagination.totalPages}
                         className="border-secondary-600 text-secondary-300 hover:bg-secondary-700 disabled:opacity-50"
                       >
                         Next
