@@ -429,7 +429,7 @@ app.use((req, res) => {
 });
 
 // Catch all handler: send back React's index.html file for any non-API routes
-app.get('*', (req, res) => {
+app.get((req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
