@@ -54,7 +54,7 @@ const seedCourses = async () => {
         category: "Engineering",
         rating: { average: 4.9, count: 1250 },
         enrollmentCount: 1250,
-        thumbnail: "/images/courses/circuit img.webp",
+        thumbnail: "/images/courses/circuit img.jpg",
         isPublished: true,
         isFeatured: true,
         instructor: new mongoose.Types.ObjectId(), // Placeholder instructor ID
@@ -139,7 +139,7 @@ const seedCourses = async () => {
         category: "Anatomy",
         rating: { average: 4.8, count: 890 },
         enrollmentCount: 890,
-        thumbnail: "/images/courses/lungs-illustration.webp",
+        thumbnail: "/images/courses/lungs-illustration.jpg",
         isPublished: true,
         isFeatured: true,
         instructor: new mongoose.Types.ObjectId(), // Placeholder instructor ID
