@@ -16,20 +16,31 @@ import LoadingSpinner from '../components/ui/LoadingSpinner';
 const Home = () => {
   const [featuredCourses, setFeaturedCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchFeaturedCourses = async () => {
       try {
+        setLoading(true);
+        setError(null);
+        
         const response = await coursesAPI.getFeaturedCourses();
-        if (response.success) {
-          setFeaturedCourses(response.data);  // ✅ use correct property
+        
+        // Enhanced validation of response structure
+        if (response && response.success && Array.isArray(response.data)) {
+          setFeaturedCourses(response.data);
+        } else if (response && Array.isArray(response)) {
+          // Handle case where response is directly an array
+          setFeaturedCourses(response);
         } else {
           console.error('Unexpected response format:', response);
-          setFeaturedCourses([]);            // fallback
+          setFeaturedCourses([]);
+          setError('Failed to load courses');
         }
       } catch (error) {
         console.error('Error fetching featured courses:', error);
-        setFeaturedCourses([]);              // fallback on error
+        setFeaturedCourses([]);
+        setError('Failed to load courses');
       } finally {
         setLoading(false);
       }
@@ -37,6 +48,9 @@ const Home = () => {
 
     fetchFeaturedCourses();
   }, []);
+
+  // Ensure featuredCourses is always an array with additional safety check
+  const safeFeaturedCourses = Array.isArray(featuredCourses) ? featuredCourses : [];
 
   const features = [
     {
@@ -244,47 +258,57 @@ const Home = () => {
             <div className="flex justify-center">
               <LoadingSpinner size="lg" />
             </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-secondary-400 mb-4">{error}</p>
+              <Button 
+                onClick={() => window.location.reload()}
+                className="bg-primary-600 hover:bg-primary-700 text-white"
+              >
+                Try Again
+              </Button>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {(featuredCourses || []).slice(0, 4).map((course) => (
-                <Card key={course._id} className="group hover:shadow-lg transition-shadow bg-secondary-800 border-secondary-600">
+              {safeFeaturedCourses.slice(0, 4).map((course, index) => (
+                <Card key={course._id || course.id || index} className="group hover:shadow-lg transition-shadow bg-secondary-800 border-secondary-600">
                   <div className="relative">
                     <img
                       src={course.thumbnail || '/course-placeholder.jpg'}
-                      alt={course.title}
+                      alt={course.title || 'Course'}
                       className="w-full h-48 object-cover rounded-t-lg"
                     />
                     <div className="absolute top-2 left-2 bg-accent-500 text-gray-900 px-2 py-1 rounded text-xs font-semibold">
                       Featured
                     </div>
                     <div className="absolute top-2 right-2 bg-primary-500 text-white px-2 py-1 rounded text-xs font-semibold">
-                      {course.category}
+                      {course.category || 'Course'}
                     </div>
                   </div>
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm text-primary-400 font-medium">
-                        {course.category}
+                        {course.category || 'General'}
                       </span>
                       <div className="flex items-center">
                         <StarIcon className="h-4 w-4 text-accent-500 fill-current" />
                         <span className="text-sm text-secondary-300 ml-1">
-                          {typeof course.rating === 'object'
+                          {typeof course.rating === 'object' && course.rating
                             ? course.rating.average?.toFixed(1) || '0.0'
                             : course.rating || '0.0'}
                         </span>
                       </div>
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary-400 transition-colors">
-                      {course.title}
+                      {course.title || 'Untitled Course'}
                     </h3>
                     <p className="text-secondary-300 text-sm mb-4 line-clamp-2">
-                      {course.description}
+                      {course.description || 'No description available'}
                     </p>
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center text-sm text-secondary-400">
                         <ClockIcon className="h-4 w-4 mr-1" />
-                        <span>{course.duration} weeks</span>
+                        <span>{course.duration || 0} weeks</span>
                       </div>
                       <div className="flex items-center text-sm text-secondary-400">
                         <UserGroupIcon className="h-4 w-4 mr-1" />
@@ -305,7 +329,7 @@ const Home = () => {
                     </div>
                     <Button
                       as={Link}
-                      to={`/courses/${course._id}`}
+                      to={`/courses/${course._id || course.id || ''}`}
                       className="w-full mt-4 bg-primary-600 hover:bg-primary-700 text-white transition-colors"
                     >
                       View Course
@@ -313,6 +337,19 @@ const Home = () => {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          )}
+
+          {!loading && !error && safeFeaturedCourses.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-secondary-400 mb-4">No featured courses available at the moment.</p>
+              <Button 
+                as={Link} 
+                to="/courses"
+                className="bg-primary-600 hover:bg-primary-700 text-white"
+              >
+                Browse All Courses
+              </Button>
             </div>
           )}
 
