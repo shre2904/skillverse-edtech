@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+// Import the Course model
+const Course = require('./models/Course');
+
 const app = express();
 
 // Middleware
@@ -23,212 +26,218 @@ app.get('/', (req, res) => {
   res.json({ message: 'SkillVerse EdTech API is running!' });
 });
 
-// Course data with only Circuit and Medical modules
-const coursesData = [
-  {
-    _id: 'circuit-101',
-    title: "Interactive Circuit Learning with VR/AR",
-    description: "Master electronics through immersive circuit building, real-time simulation, and guided tutorials in virtual reality.",
-    price: 2999,
-    originalPrice: 3999,
-    duration: 120, // in minutes
-    level: "Intermediate",
-    category: "Engineering",
-    rating: { average: 4.9, count: 1250 },
-    studentsCount: 1250,
-    enrollmentCount: 1250,
-    thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500",
-    isPublished: true,
-    isFeatured: true,
-    instructor: {
-      name: "Dr. Sarah Johnson",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100",
-      bio: "Expert in electrical engineering with 15+ years of experience"
-    },
-    features: [
-      "Drag & Drop Circuit Building",
-      "Real-time Electrical Simulation", 
-      "VR/AR Immersive Experience",
-      "Interactive Component Library",
-      "Progress Tracking & Analytics"
-    ],
-    learningOutcomes: [
-      "Understand fundamental circuit theory and components",
-      "Build and test circuits using interactive tools",
-      "Master VR/AR circuit building techniques",
-      "Analyze circuit behavior in real-time",
-      "Apply knowledge to practical projects"
-    ],
-    lessons: [
+// Function to seed the database with courses
+const seedCourses = async () => {
+  try {
+    // Check if courses already exist
+    const existingCourses = await Course.countDocuments();
+    if (existingCourses > 0) {
+      console.log('✅ Courses already exist in database');
+      return;
+    }
+
+    console.log(' Seeding database with courses...');
+
+    const coursesToSeed = [
       {
-        _id: "lesson-1",
-        title: "Introduction to Circuit Theory",
-        description: "Learn the basics of electrical circuits and components",
-        duration: 15,
-        isFree: true
+        title: "Interactive Circuit Learning with VR/AR",
+        description: "Master electronics through immersive circuit building, real-time simulation, and guided tutorials in virtual reality.",
+        detailedDescription: "This comprehensive course combines traditional electronics education with cutting-edge VR/AR technology. Students will learn circuit theory, component identification, and hands-on building through immersive virtual environments.",
+        price: 2999,
+        originalPrice: 3999,
+        duration: 120, // in minutes
+        level: "Intermediate",
+        category: "Engineering",
+        rating: { average: 4.9, count: 1250 },
+        enrollmentCount: 1250,
+        thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500",
+        isPublished: true,
+        isFeatured: true,
+        instructor: new mongoose.Types.ObjectId(), // Placeholder instructor ID
+        features: [
+          "Drag & Drop Circuit Building",
+          "Real-time Electrical Simulation", 
+          "VR/AR Immersive Experience",
+          "Interactive Component Library",
+          "Progress Tracking & Analytics"
+        ],
+        learningOutcomes: [
+          "Understand fundamental circuit theory and components",
+          "Build and test circuits using interactive tools",
+          "Master VR/AR circuit building techniques",
+          "Analyze circuit behavior in real-time",
+          "Apply knowledge to practical projects"
+        ],
+        lessons: [
+          {
+            title: "Introduction to Circuit Theory",
+            description: "Learn the basics of electrical circuits and components",
+            content: "This lesson covers fundamental concepts of electrical circuits, including voltage, current, resistance, and Ohm's law.",
+            duration: 15,
+            order: 1,
+            isFree: true
+          },
+          {
+            title: "Interactive Circuit Building",
+            description: "Build your first circuit using drag and drop interface",
+            content: "Hands-on practice with our interactive circuit builder. Learn to connect components and understand circuit flow.",
+            duration: 25,
+            order: 2,
+            isFree: false
+          },
+          {
+            title: "Real-time Simulation",
+            description: "Watch your circuit come to life with live simulation",
+            content: "See how your circuits behave in real-time with our advanced simulation engine.",
+            duration: 20,
+            order: 3,
+            isFree: false
+          },
+          {
+            title: "VR Circuit Experience",
+            description: "Immersive VR circuit building and testing",
+            content: "Step into virtual reality to build and test circuits in a 3D environment.",
+            duration: 30,
+            order: 4,
+            isFree: false
+          },
+          {
+            title: "Advanced Components",
+            description: "Explore transistors, capacitors, and complex circuits",
+            content: "Learn about advanced electronic components and their applications in complex circuits.",
+            duration: 30,
+            order: 5,
+            isFree: false
+          }
+        ],
+        requirements: [
+          "Basic understanding of physics",
+          "VR headset recommended (optional)",
+          "Computer with modern browser",
+          "No prior electronics experience required"
+        ],
+        reviews: [
+          {
+            user: new mongoose.Types.ObjectId(),
+            rating: 5,
+            comment: "Amazing VR experience! The circuit building is so intuitive."
+          },
+          {
+            user: new mongoose.Types.ObjectId(),
+            rating: 5,
+            comment: "Best way to learn electronics. The real-time simulation is incredible!"
+          }
+        ]
       },
       {
-        _id: "lesson-2", 
-        title: "Interactive Circuit Building",
-        description: "Build your first circuit using drag and drop interface",
-        duration: 25,
-        isFree: false
-      },
-      {
-        _id: "lesson-3",
-        title: "Real-time Simulation",
-        description: "Watch your circuit come to life with live simulation",
-        duration: 20,
-        isFree: false
-      },
-      {
-        _id: "lesson-4",
-        title: "VR Circuit Experience",
-        description: "Immersive VR circuit building and testing",
-        duration: 30,
-        isFree: false
-      },
-      {
-        _id: "lesson-5",
-        title: "Advanced Components",
-        description: "Explore transistors, capacitors, and complex circuits",
-        duration: 30,
-        isFree: false
+        title: "VR Lungs Anatomy Learning Module",
+        description: "Explore human lung anatomy through interactive 3D models, guided instruction systems, and immersive VR experiences.",
+        detailedDescription: "Dive deep into human respiratory anatomy with our cutting-edge VR learning module. Perfect for medical students, healthcare professionals, and anatomy enthusiasts.",
+        price: 2499,
+        originalPrice: 3299,
+        duration: 90, // in minutes
+        level: "Beginner",
+        category: "Anatomy",
+        rating: { average: 4.8, count: 890 },
+        enrollmentCount: 890,
+        thumbnail: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500",
+        isPublished: true,
+        isFeatured: true,
+        instructor: new mongoose.Types.ObjectId(), // Placeholder instructor ID
+        features: [
+          "Interactive 3D Lung Models",
+          "VR Immersive Experience",
+          "Bronchial Tree Visualization",
+          "Real-time Anatomy Exploration",
+          "Guided Learning System"
+        ],
+        learningOutcomes: [
+          "Understand lung anatomy and structure",
+          "Navigate 3D lung models effectively",
+          "Identify bronchial tree components",
+          "Apply knowledge to medical scenarios",
+          "Master VR anatomy exploration"
+        ],
+        lessons: [
+          {
+            title: "Introduction to Lung Anatomy",
+            description: "Learn the basic structure and function of human lungs",
+            content: "Overview of lung structure, function, and importance in the respiratory system.",
+            duration: 12,
+            order: 1,
+            isFree: true
+          },
+          {
+            title: "3D Lung Model Exploration",
+            description: "Interact with detailed 3D models of lung structures",
+            content: "Explore detailed 3D models of lungs with interactive features and annotations.",
+            duration: 18,
+            order: 2,
+            isFree: false
+          },
+          {
+            title: "Bronchial Tree Visualization",
+            description: "Explore the complex branching system of airways",
+            content: "Learn about the bronchial tree structure and its role in air distribution.",
+            duration: 15,
+            order: 3,
+            isFree: false
+          },
+          {
+            title: "VR Anatomy Experience",
+            description: "Immersive VR exploration of lung anatomy",
+            content: "Step into VR to explore lung anatomy in a fully immersive 3D environment.",
+            duration: 25,
+            order: 4,
+            isFree: false
+          },
+          {
+            title: "Respiratory System Function",
+            description: "Understand how breathing works in detail",
+            content: "Learn about the mechanics of breathing and gas exchange in the lungs.",
+            duration: 20,
+            order: 5,
+            isFree: false
+          }
+        ],
+        requirements: [
+          "Basic biology knowledge helpful",
+          "VR headset recommended (optional)",
+          "Computer with modern browser",
+          "No prior medical experience required"
+        ],
+        reviews: [
+          {
+            user: new mongoose.Types.ObjectId(),
+            rating: 5,
+            comment: "Incredible detail in the 3D models. Perfect for medical students!"
+          },
+          {
+            user: new mongoose.Types.ObjectId(),
+            rating: 4,
+            comment: "The VR experience makes learning anatomy so much more engaging."
+          }
+        ]
       }
-    ],
-    requirements: [
-      "Basic understanding of physics",
-      "VR headset recommended (optional)",
-      "Computer with modern browser",
-      "No prior electronics experience required"
-    ],
-    reviews: [
-      {
-        _id: "review-1",
-        user: {
-          name: "Alex Chen",
-          avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50"
-        },
-        rating: 5,
-        comment: "Amazing VR experience! The circuit building is so intuitive."
-      },
-      {
-        _id: "review-2", 
-        user: {
-          name: "Sarah Wilson",
-          avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50"
-        },
-        rating: 5,
-        comment: "Best way to learn electronics. The real-time simulation is incredible!"
-      }
-    ]
-  },
-  {
-    _id: 'medical-101',
-    title: "VR Lungs Anatomy Learning Module",
-    description: "Explore human lung anatomy through interactive 3D models, guided instruction systems, and immersive VR experiences.",
-    price: 2499,
-    originalPrice: 3299,
-    duration: 90, // in minutes
-    level: "Beginner",
-    category: "Anatomy",
-    rating: { average: 4.8, count: 890 },
-    studentsCount: 890,
-    enrollmentCount: 890,
-    thumbnail: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500",
-    isPublished: true,
-    isFeatured: true,
-    instructor: {
-      name: "Dr. Michael Chen",
-      avatar: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100",
-      bio: "Medical professional specializing in respiratory anatomy"
-    },
-    features: [
-      "Interactive 3D Lung Models",
-      "VR Immersive Experience",
-      "Bronchial Tree Visualization",
-      "Real-time Anatomy Exploration",
-      "Guided Learning System"
-    ],
-    learningOutcomes: [
-      "Understand lung anatomy and structure",
-      "Navigate 3D lung models effectively",
-      "Identify bronchial tree components",
-      "Apply knowledge to medical scenarios",
-      "Master VR anatomy exploration"
-    ],
-    lessons: [
-      {
-        _id: "lesson-1",
-        title: "Introduction to Lung Anatomy",
-        description: "Learn the basic structure and function of human lungs",
-        duration: 12,
-        isFree: true
-      },
-      {
-        _id: "lesson-2",
-        title: "3D Lung Model Exploration",
-        description: "Interact with detailed 3D models of lung structures",
-        duration: 18,
-        isFree: false
-      },
-      {
-        _id: "lesson-3",
-        title: "Bronchial Tree Visualization",
-        description: "Explore the complex branching system of airways",
-        duration: 15,
-        isFree: false
-      },
-      {
-        _id: "lesson-4",
-        title: "VR Anatomy Experience",
-        description: "Immersive VR exploration of lung anatomy",
-        duration: 25,
-        isFree: false
-      },
-      {
-        _id: "lesson-5",
-        title: "Respiratory System Function",
-        description: "Understand how breathing works in detail",
-        duration: 20,
-        isFree: false
-      }
-    ],
-    requirements: [
-      "Basic biology knowledge helpful",
-      "VR headset recommended (optional)",
-      "Computer with modern browser",
-      "No prior medical experience required"
-    ],
-    reviews: [
-      {
-        _id: "review-1",
-        user: {
-          name: "Dr. Emily Rodriguez",
-          avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=50"
-        },
-        rating: 5,
-        comment: "Incredible detail in the 3D models. Perfect for medical students!"
-      },
-      {
-        _id: "review-2",
-        user: {
-          name: "James Thompson",
-          avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50"
-        },
-        rating: 4,
-        comment: "The VR experience makes learning anatomy so much more engaging."
-      }
-    ]
+    ];
+
+    // Insert courses into database
+    await Course.insertMany(coursesToSeed);
+    console.log('✅ Database seeded successfully with courses');
+  } catch (error) {
+    console.error('❌ Error seeding database:', error);
   }
-];
+};
+
+// Seed the database when server starts
+seedCourses();
 
 // Featured courses route
 app.get('/courses/featured', async (req, res) => {
   try {
     console.log('Fetching featured courses...');
     
-    const featuredCourses = coursesData.filter(course => course.isFeatured);
+    const featuredCourses = await Course.find({ isFeatured: true, isPublished: true });
     
     console.log(`Returning ${featuredCourses.length} featured courses`);
     
@@ -251,16 +260,62 @@ app.get('/courses', async (req, res) => {
   try {
     console.log('Fetching courses...');
     
-    console.log(`Returning ${coursesData.length} courses`);
+    const { page = 1, limit = 10, search, category, level, sort } = req.query;
+    
+    // Build filter object
+    const filter = { isPublished: true };
+    
+    if (search) {
+      filter.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } }
+      ];
+    }
+    
+    if (category && category !== 'All') {
+      filter.category = category;
+    }
+    
+    if (level && level !== 'All') {
+      filter.level = level;
+    }
+    
+    // Build sort object
+    let sortObj = {};
+    switch (sort) {
+      case 'price_asc':
+        sortObj = { price: 1 };
+        break;
+      case 'price_desc':
+        sortObj = { price: -1 };
+        break;
+      case 'rating':
+        sortObj = { 'rating.average': -1 };
+        break;
+      case 'enrollment':
+        sortObj = { enrollmentCount: -1 };
+        break;
+      default:
+        sortObj = { createdAt: -1 };
+    }
+    
+    const courses = await Course.find(filter)
+      .sort(sortObj)
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+    
+    const total = await Course.countDocuments(filter);
+    
+    console.log(`Returning ${courses.length} courses out of ${total} total`);
     
     res.json({
       success: true,
-      data: coursesData,
+      data: courses,
       pagination: {
-        page: 1,
-        limit: 10,
-        total: coursesData.length,
-        pages: 1
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total,
+        pages: Math.ceil(total / limit)
       }
     });
   } catch (error) {
@@ -279,7 +334,7 @@ app.get('/courses/:id', async (req, res) => {
     const { id } = req.params;
     console.log(`Fetching course with ID: ${id}`);
     
-    const course = coursesData.find(c => c._id === id);
+    const course = await Course.findById(id);
     
     if (!course) {
       return res.status(404).json({
@@ -381,5 +436,5 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(` Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
