@@ -30,6 +30,29 @@ app.get('/', (req, res) => {
   res.json({ message: 'SkillVerse EdTech API is running!' });
 });
 
+// Function to update existing courses with correct image names
+const updateCourseImages = async () => {
+  try {
+    console.log('🔄 Updating course images...');
+    
+    // Update Circuit Module course
+    await Course.updateOne(
+      { title: "Interactive Circuit Learning with VR/AR" },
+      { $set: { thumbnail: "/images/courses/circuit img.jpg" } }
+    );
+    
+    // Update Medical Module course
+    await Course.updateOne(
+      { title: "VR Lungs Anatomy Learning Module" },
+      { $set: { thumbnail: "/images/courses/lungs-illustration.jpg" } }
+    );
+    
+    console.log('✅ Course images updated successfully');
+  } catch (error) {
+    console.error('❌ Error updating course images:', error);
+  }
+};
+
 // Function to seed the database with courses
 const seedCourses = async () => {
   try {
@@ -37,6 +60,8 @@ const seedCourses = async () => {
     const existingCourses = await Course.countDocuments();
     if (existingCourses > 0) {
       console.log('✅ Courses already exist in database');
+      // Update existing courses with correct image names
+      await updateCourseImages();
       return;
     }
 
@@ -46,7 +71,7 @@ const seedCourses = async () => {
       {
         title: "Interactive Circuit Learning with VR/AR",
         description: "Master electronics through immersive circuit building, real-time simulation, and guided tutorials in virtual reality.",
-        detailedDescription: "This comprehensive course combines traditional electronics education with cutting-edge VR/AR technology. Students will learn circuit theory, component identification, and hands-on building through immersive virtual environments.",
+        detailedDescription: "Experience the future of electronics education with our cutting-edge VR/AR circuit learning module. Build, test, and analyze circuits in an immersive 3D environment.",
         price: 2999,
         originalPrice: 3999,
         duration: 2,
@@ -57,7 +82,7 @@ const seedCourses = async () => {
         thumbnail: "/images/courses/circuit img.jpg",
         isPublished: true,
         isFeatured: true,
-        instructor: new mongoose.Types.ObjectId(), // Placeholder instructor ID
+        instructor: new mongoose.Types.ObjectId(),
         features: [
           "Drag & Drop Circuit Building",
           "Real-time Circuit Simulation",
@@ -142,60 +167,60 @@ const seedCourses = async () => {
         thumbnail: "/images/courses/lungs-illustration.jpg",
         isPublished: true,
         isFeatured: true,
-        instructor: new mongoose.Types.ObjectId(), // Placeholder instructor ID
+        instructor: new mongoose.Types.ObjectId(),
         features: [
           "Interactive 3D Lung Models",
           "VR Anatomy Exploration",
           "Guided Learning Paths",
           "Real-time 3D Visualization",
-          "Medical-grade Accuracy",
-          "Progress Assessment"
+          "Anatomical Structure Labeling",
+          "Interactive Quizzes"
         ],
         learningOutcomes: [
-          "Master human lung anatomy",
-          "Navigate 3D anatomical models",
-          "Understand respiratory system function",
-          "Apply knowledge in clinical settings",
-          "Develop spatial understanding of anatomy"
+          "Identify all major lung structures and their functions",
+          "Understand respiratory system physiology",
+          "Navigate 3D anatomical models confidently",
+          "Apply knowledge in clinical scenarios",
+          "Master respiratory system terminology"
         ],
         lessons: [
           {
-            title: "Introduction to Lung Anatomy",
-            description: "Learn the basic structure and function of human lungs",
-            content: "Overview of lung structure, function, and importance in the respiratory system.",
-            duration: 12,
+            title: "Introduction to Respiratory System",
+            description: "Overview of the human respiratory system and its importance",
+            content: "Learn about the structure and function of the respiratory system, including the role of lungs in gas exchange.",
+            duration: 20,
             order: 1,
             isFree: true
           },
           {
-            title: "3D Lung Model Exploration",
-            description: "Interact with detailed 3D models of lung structures",
-            content: "Explore detailed 3D models of lungs with interactive features and annotations.",
-            duration: 18,
+            title: "3D Lung Anatomy Exploration",
+            description: "Interactive exploration of lung structures in 3D",
+            content: "Navigate through detailed 3D models of the lungs, identifying key anatomical structures and their relationships.",
+            duration: 30,
             order: 2,
             isFree: false
           },
           {
-            title: "Bronchial Tree Visualization",
-            description: "Explore the complex branching system of airways",
-            content: "Learn about the bronchial tree structure and its role in air distribution.",
-            duration: 15,
+            title: "VR Anatomy Lab",
+            description: "Immersive VR experience for hands-on anatomy learning",
+            content: "Step into a virtual anatomy lab to explore lung structures in an immersive 3D environment.",
+            duration: 25,
             order: 3,
             isFree: false
           },
           {
-            title: "VR Anatomy Experience",
-            description: "Immersive VR exploration of lung anatomy",
-            content: "Step into VR to explore lung anatomy in a fully immersive 3D environment.",
-            duration: 25,
+            title: "Respiratory Physiology",
+            description: "Understanding how the lungs function in breathing",
+            content: "Learn about the mechanics of breathing, gas exchange, and respiratory physiology.",
+            duration: 20,
             order: 4,
             isFree: false
           },
           {
-            title: "Respiratory System Function",
-            description: "Understand how breathing works in detail",
-            content: "Learn about the mechanics of breathing and gas exchange in the lungs.",
-            duration: 20,
+            title: "Clinical Applications",
+            description: "Applying anatomical knowledge to clinical scenarios",
+            content: "Explore how understanding lung anatomy applies to medical diagnosis and treatment.",
+            duration: 25,
             order: 5,
             isFree: false
           }
@@ -204,37 +229,33 @@ const seedCourses = async () => {
           {
             user: new mongoose.Types.ObjectId(),
             rating: 5,
-            comment: "Incredible detail in the 3D models. Perfect for medical students!"
+            comment: "Incredible VR experience! The 3D models are so detailed and realistic."
           },
           {
             user: new mongoose.Types.ObjectId(),
             rating: 4,
-            comment: "The VR experience makes learning anatomy so much more engaging."
+            comment: "Great learning tool for medical students. The guided instruction is very helpful."
           }
         ]
       }
     ];
 
-    // Insert courses into database
     await Course.insertMany(coursesToSeed);
-    console.log('✅ Database seeded successfully with courses');
+    console.log('✅ Courses seeded successfully');
   } catch (error) {
-    console.error('❌ Error seeding database:', error);
+    console.error('❌ Error seeding courses:', error);
   }
 };
 
-// Seed the database when server starts
+// Seed courses on startup
 seedCourses();
 
-// Featured courses route
-app.get('/courses/featured', async (req, res) => {
+// API Routes
+app.get('/api/courses/featured', async (req, res) => {
   try {
     console.log('Fetching featured courses...');
-    
     const featuredCourses = await Course.find({ isFeatured: true, isPublished: true });
-    
-    console.log(`Returning ${featuredCourses.length} featured courses`);
-    
+    console.log(`Found ${featuredCourses.length} featured courses`);
     res.json({
       success: true,
       data: featuredCourses
@@ -243,109 +264,70 @@ app.get('/courses/featured', async (req, res) => {
     console.error('Error fetching featured courses:', error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching featured courses',
+      message: 'Failed to fetch featured courses',
       error: error.message
     });
   }
 });
 
-// All courses route
-app.get('/courses', async (req, res) => {
+app.get('/api/courses', async (req, res) => {
   try {
-    console.log('Fetching courses...');
+    const { page = 1, limit = 10, category, level, search } = req.query;
+    const query = { isPublished: true };
     
-    const { page = 1, limit = 10, search, category, level, sort } = req.query;
-    
-    // Build filter object
-    const filter = { isPublished: true };
-    
+    if (category) query.category = category;
+    if (level) query.level = level;
     if (search) {
-      filter.$or = [
+      query.$or = [
         { title: { $regex: search, $options: 'i' } },
         { description: { $regex: search, $options: 'i' } }
       ];
     }
-    
-    if (category && category !== 'All') {
-      filter.category = category;
-    }
-    
-    if (level && level !== 'All') {
-      filter.level = level;
-    }
-    
-    // Build sort object
-    let sortObj = {};
-    switch (sort) {
-      case 'price_asc':
-        sortObj = { price: 1 };
-        break;
-      case 'price_desc':
-        sortObj = { price: -1 };
-        break;
-      case 'rating':
-        sortObj = { 'rating.average': -1 };
-        break;
-      case 'enrollment':
-        sortObj = { enrollmentCount: -1 };
-        break;
-      default:
-        sortObj = { createdAt: -1 };
-    }
-    
-    const courses = await Course.find(filter)
-      .sort(sortObj)
+
+    const courses = await Course.find(query)
       .limit(limit * 1)
-      .skip((page - 1) * limit);
-    
-    const total = await Course.countDocuments(filter);
-    
-    console.log(`Returning ${courses.length} courses out of ${total} total`);
-    
+      .skip((page - 1) * limit)
+      .sort({ createdAt: -1 });
+
+    const total = await Course.countDocuments(query);
+
     res.json({
       success: true,
       data: courses,
       pagination: {
-        page: parseInt(page),
-        limit: parseInt(limit),
-        total,
-        pages: Math.ceil(total / limit)
+        current: parseInt(page),
+        pages: Math.ceil(total / limit),
+        total
       }
     });
   } catch (error) {
     console.error('Error fetching courses:', error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching courses',
+      message: 'Failed to fetch courses',
       error: error.message
     });
   }
 });
 
-// Get course by ID route
-app.get('/courses/:id', async (req, res) => {
+app.get('/api/courses/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    console.log(`Fetching course with ID: ${id}`);
-    
-    const course = await Course.findById(id);
-    
+    const course = await Course.findById(req.params.id);
     if (!course) {
       return res.status(404).json({
         success: false,
         message: 'Course not found'
       });
     }
-    
     res.json({
       success: true,
-      course: course
+      data: course
     });
   } catch (error) {
     console.error('Error fetching course:', error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching course',
+      message: 'Failed to fetch course',
       error: error.message
     });
   }
