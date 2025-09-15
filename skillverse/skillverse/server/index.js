@@ -45,28 +45,29 @@ const seedCourses = async () => {
         detailedDescription: "This comprehensive course combines traditional electronics education with cutting-edge VR/AR technology. Students will learn circuit theory, component identification, and hands-on building through immersive virtual environments.",
         price: 2999,
         originalPrice: 3999,
-        duration: 120, // in minutes
+        duration: 2,
         level: "Intermediate",
         category: "Engineering",
         rating: { average: 4.9, count: 1250 },
         enrollmentCount: 1250,
-        thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500",
+        thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500&h=300&fit=crop&crop=center",
         isPublished: true,
         isFeatured: true,
         instructor: new mongoose.Types.ObjectId(), // Placeholder instructor ID
         features: [
           "Drag & Drop Circuit Building",
-          "Real-time Electrical Simulation", 
-          "VR/AR Immersive Experience",
+          "Real-time Circuit Simulation",
+          "VR/AR Integration",
           "Interactive Component Library",
-          "Progress Tracking & Analytics"
+          "Step-by-step Tutorials",
+          "Progress Tracking"
         ],
         learningOutcomes: [
-          "Understand fundamental circuit theory and components",
-          "Build and test circuits using interactive tools",
-          "Master VR/AR circuit building techniques",
-          "Analyze circuit behavior in real-time",
-          "Apply knowledge to practical projects"
+          "Understand fundamental circuit theory",
+          "Build complex circuits using VR/AR tools",
+          "Analyze circuit behavior through simulation",
+          "Master component identification and usage",
+          "Apply knowledge to real-world projects"
         ],
         lessons: [
           {
@@ -110,12 +111,6 @@ const seedCourses = async () => {
             isFree: false
           }
         ],
-        requirements: [
-          "Basic understanding of physics",
-          "VR headset recommended (optional)",
-          "Computer with modern browser",
-          "No prior electronics experience required"
-        ],
         reviews: [
           {
             user: new mongoose.Types.ObjectId(),
@@ -135,28 +130,29 @@ const seedCourses = async () => {
         detailedDescription: "Dive deep into human respiratory anatomy with our cutting-edge VR learning module. Perfect for medical students, healthcare professionals, and anatomy enthusiasts.",
         price: 2499,
         originalPrice: 3299,
-        duration: 90, // in minutes
-        level: "Beginner",
+        duration: 2,
+        level: "Intermediate",
         category: "Anatomy",
         rating: { average: 4.8, count: 890 },
         enrollmentCount: 890,
-        thumbnail: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500",
+        thumbnail: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500&h=300&fit=crop&crop=center",
         isPublished: true,
         isFeatured: true,
         instructor: new mongoose.Types.ObjectId(), // Placeholder instructor ID
         features: [
           "Interactive 3D Lung Models",
-          "VR Immersive Experience",
-          "Bronchial Tree Visualization",
-          "Real-time Anatomy Exploration",
-          "Guided Learning System"
+          "VR Anatomy Exploration",
+          "Guided Learning Paths",
+          "Real-time 3D Visualization",
+          "Medical-grade Accuracy",
+          "Progress Assessment"
         ],
         learningOutcomes: [
-          "Understand lung anatomy and structure",
-          "Navigate 3D lung models effectively",
-          "Identify bronchial tree components",
-          "Apply knowledge to medical scenarios",
-          "Master VR anatomy exploration"
+          "Master human lung anatomy",
+          "Navigate 3D anatomical models",
+          "Understand respiratory system function",
+          "Apply knowledge in clinical settings",
+          "Develop spatial understanding of anatomy"
         ],
         lessons: [
           {
@@ -199,12 +195,6 @@ const seedCourses = async () => {
             order: 5,
             isFree: false
           }
-        ],
-        requirements: [
-          "Basic biology knowledge helpful",
-          "VR headset recommended (optional)",
-          "Computer with modern browser",
-          "No prior medical experience required"
         ],
         reviews: [
           {
