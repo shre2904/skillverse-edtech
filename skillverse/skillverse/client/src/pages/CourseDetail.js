@@ -36,7 +36,8 @@ const CourseDetail = () => {
     }
   );
 
-  const course = courseData?.course;
+  // Fix: Change from courseData?.course to courseData?.data
+  const course = courseData?.data;
 
   const handleEnroll = async () => {
     if (!user) {

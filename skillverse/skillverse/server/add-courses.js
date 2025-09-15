@@ -103,8 +103,8 @@ async function getCoursesData(instructors) {
       category: 'Engineering',
       price: 2999,
       originalPrice: 3999,
-      thumbnail: 'https://https://imgs.search.brave.com/fWCm-UAyq8xJL3ucjXlIpuT1wuK_GS4EiH3k9lLFXXQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pY2hl/Zi5iYmNpLmNvLnVr/L2ltYWdlcy9pYy80/ODB4MjcwL3AwZjA4/bTZqLnBuZw/circuit-image.jpg', // Replace with your actual image URL
-      images: ['https://https://imgs.search.brave.com/fWCm-UAyq8xJL3ucjXlIpuT1wuK_GS4EiH3k9lLFXXQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pY2hl/Zi5iYmNpLmNvLnVr/L2ltYWdlcy9pYy80/ODB4MjcwL3AwZjA4/bTZqLnBuZw/circuit-course.jpg'], // Replace with your actual image URL
+      thumbnail: 'https://imgs.search.brave.com/fWCm-UAyq8xJL3ucjXlIpuT1wuK_GS4EiH3k9lLFXXQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pY2hl/Zi5iYmNpLmNvLnVr/L2ltYWdlcy9pYy80/ODB4MjcwL3AwZjA4/bTZqLnBuZw/circuit-image.jpg', // Replace with your actual image URL
+      images: ['https://imgs.search.brave.com/fWCm-UAyq8xJL3ucjXlIpuT1wuK_GS4EiH3k9lLFXXQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pY2hl/Zi5iYmNpLmNvLnVr/L2ltYWdlcy9pYy80/ODB4MjcwL3AwZjA4/bTZqLnBuZw/circuit-course.jpg'], // Replace with your actual image URL
       duration: 8, // 8 weeks in number
       level: 'Intermediate',
       language: 'English',
@@ -164,8 +164,8 @@ async function getCoursesData(instructors) {
       category: 'Anatomy',
       price: 3999,
       originalPrice: 4999,
-      thumbnail: 'https://https://imgs.search.brave.com/cxwAvVYr2Q2Ve8ak07h6YCXVMc364k4QR2P_xCXVoic/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTYw/NzA5NDkyMi92ZWN0/b3IvbHVuZ3MtaWxs/dXN0cmF0aW9uLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1V/VVdkeU5GTl9wYWVf/WjRDemUwZk8xc2la/MmNMMW4tX3ZtNGJk/QnNCejRNPQ/medical-image.jpg', // Replace with your actual image URL
-      images: ['https://https://imgs.search.brave.com/cxwAvVYr2Q2Ve8ak07h6YCXVMc364k4QR2P_xCXVoic/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTYw/NzA5NDkyMi92ZWN0/b3IvbHVuZ3MtaWxs/dXN0cmF0aW9uLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1V/VVdkeU5GTl9wYWVf/WjRDemUwZk8xc2la/MmNMMW4tX3ZtNGJk/QnNCejRNPQ/medical-course.jpg'], // Replace with your actual image URL
+      thumbnail: 'https://imgs.search.brave.com/cxwAvVYr2Q2Ve8ak07h6YCXVMc364k4QR2P_xCXVoic/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTYw/NzA5NDkyMi92ZWN0/b3IvbHVuZ3MtaWxs/dXN0cmF0aW9uLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1V/VVdkeU5GTl9wYWVf/WjRDemUwZk8xc2la/MmNMMW4tX3ZtNGJk/QnNCejRNPQ/medical-image.jpg', // Replace with your actual image URL
+      images: ['https://imgs.search.brave.com/cxwAvVYr2Q2Ve8ak07h6YCXVMc364k4QR2P_xCXVoic/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTYw/NzA5NDkyMi92ZWN0/b3IvbHVuZ3MtaWxs/dXN0cmF0aW9uLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1V/VVdkeU5GTl9wYWVf/WjRDemUwZk8xc2la/MmNMMW4tX3ZtNGJk/QnNCejRNPQ/medical-course.jpg'], // Replace with your actual image URL
       duration: 10, // 10 weeks in number
       level: 'Beginner',
       language: 'English',
